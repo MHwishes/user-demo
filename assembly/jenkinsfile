@@ -8,7 +8,7 @@ pipeline {
         nodejs 'v8.1.4'
       }
       steps {
-        sh 'echo first'
+        sh 'sh ./assembly/setup.sh'
       }
       post {
         failure {
@@ -19,9 +19,10 @@ pipeline {
     stage('Unit Tests') {
       tools {
         nodejs 'v8.1.4'
+        gradle 'v3.3'
       }
       steps {
-        sh 'echo aaa'
+        sh 'sh ./assembly/test.sh'
       }
       post {
         failure {
