@@ -1,0 +1,33 @@
+#!/usr/bin/env groovy
+
+pipeline {
+  agent any
+  stages {
+    stage('Build') {
+      tools {
+        nodejs 'Node 8.x'
+      }
+      steps {
+        sh 'echo first'
+      }
+      post {
+        failure {
+          cleanWs()
+        }
+      }
+    }
+    stage('Unit Tests') {
+      tools {
+        nodejs 'Node 8.x'
+      }
+      steps {
+        sh 'echo aaa'
+      }
+      post {
+        failure {
+          cleanWs()
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+version: '2'
+services:
+  jenkins:
+    image: jenkins:2.60.1
+    build: ./jenkins-docker
+    container_name: ci_jenkins
+    ports:
+      - 8080:8080
+    networks:
+      main:
+        aliases:
+          - jenkins
+networks:
+  main:
