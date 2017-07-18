@@ -10,11 +10,6 @@ pipeline {
       steps {
         sh 'sh ./assembly/setup.sh'
       }
-      post {
-        failure {
-          cleanWs()
-        }
-      }
     }
     stage('Unit Tests') {
       tools {
@@ -23,11 +18,6 @@ pipeline {
       }
       steps {
         sh 'sh ./assembly/test.sh'
-      }
-      post {
-        failure {
-          cleanWs()
-        }
       }
     }
   }
