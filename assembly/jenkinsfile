@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 pipeline {
-  agent any
+  agent {docker: node:8}
   stages {
     stage('Build') {
       tools {
@@ -9,6 +9,11 @@ pipeline {
       }
       steps {
         sh 'sh ./assembly/setup.sh'
+      }
+      post {
+        failure {
+          cleanWs()
+        }
       }
     }
     stage('Unit Tests') {
@@ -18,6 +23,11 @@ pipeline {
       }
       steps {
         sh 'sh ./assembly/test.sh'
+      }
+      post {
+        failure {
+          cleanWs()
+          }
       }
     }
   }
