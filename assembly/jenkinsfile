@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 pipeline {
-  agent { docker 'node:8-alpine' }
+  agent any
   stages {
     stage('Build') {
       tools {
