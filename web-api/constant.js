@@ -4,7 +4,8 @@ const constant = {
         CREATED: 201,
         NO_CONTENT: 204,
         NOT_FOUND: 404,
-        BAD_REQUEST: 400
+        BAD_REQUEST: 400,
+        Internal_Server_Error:500
     }
 };
 

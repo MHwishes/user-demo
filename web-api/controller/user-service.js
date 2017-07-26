@@ -5,13 +5,13 @@ const apiService = config.get('back_endApiService');
 class ApiServiceController {
 
 
-   getAllUsers(req, res, next) {
+    getAllUsers(req, res, next) {
         request
             .get(apiService)
             .set('Accept', 'application/json')
             .end((err, result) => {
                 if (err) {
-                    throw (err);
+                    next(err);
                 } else {
                     return res.status(constant.httpCode.OK).send(result.body);
                 }
@@ -26,7 +26,10 @@ class ApiServiceController {
             .set('Accept', 'application/json')
             .end((err, user) => {
                 if (err) {
-                    throw(err);
+                    if (err.status === constant.httpCode.NOT_FOUND) {
+                        return res.sendStatus(constant.httpCode.NOT_FOUND);
+                    }
+                    next(err);
                 } else {
                     return res.status(constant.httpCode.OK).send(user.body);
                 }
@@ -43,8 +46,10 @@ class ApiServiceController {
             .set('Accept', 'application/json')
             .end((err, doc) => {
                 if (err) {
-                    console.log("dhfajskfh");
-                    throw (err);
+                    if (err.status === constant.httpCode.NOT_FOUND) {
+                        return res.sendStatus(constant.httpCode.NOT_FOUND);
+                    }
+                    next(err);
                 } else {
                     return res.sendStatus(constant.httpCode.NO_CONTENT)
                 }
@@ -59,7 +64,7 @@ class ApiServiceController {
             .send(req.body)
             .end((err, doc) => {
                 if (err) {
-                    throw (err);
+                    next(err);
                 } else {
                     return res.sendStatus(constant.httpCode.CREATED);
                 }
@@ -74,7 +79,10 @@ class ApiServiceController {
             .set('Accept', 'application/json')
             .end((err, request) => {
                 if (err) {
-                    throw (err);
+                    if (err.status === constant.httpCode.NOT_FOUND) {
+                        return res.sendStatus(constant.httpCode.NOT_FOUND);
+                    }
+                    next(err);
                 } else {
                     return res.sendStatus(constant.httpCode.NO_CONTENT);
                 }
