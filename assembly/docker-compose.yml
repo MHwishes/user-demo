@@ -50,7 +50,7 @@ services:
         - 3000:3000
       volumes:
         - ../web-api:/var/app
-      command: bash -c "cd /var/app && node app.js"
+      command: sh -c "cd /var/app && npm start "
       networks:
         main:
           aliases:
