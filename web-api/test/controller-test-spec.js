@@ -5,7 +5,7 @@ const app = require('../app');
 const request = supertest(app);
 
 describe('Test the root path', () => {
-    beforeEach("the base data",()=>{
+    beforeEach("the base data", () => {
 
     });
 
@@ -13,10 +13,7 @@ describe('Test the root path', () => {
         request
             .get('/users')
             .expect(200)
-            .expect((res) => {
-                res.body.length.should.equal(4);
-
-            }).end(done);
+            .end(done);
     });
 
     it('POST user', (done) => {
@@ -32,11 +29,11 @@ describe('Test the root path', () => {
 
     it('PUT send users from mysql', (done) => {
         request
-            .put('/papers/5')
+            .put('/users/1')
             .send({
                 "id": 5,
                 "name": "test",
-                "age":6
+                "age": 6
             })
             .expect(204)
             .end(done)
@@ -44,7 +41,7 @@ describe('Test the root path', () => {
 
     it('DELETE users from mysql', (done) => {
         request
-            .delete('/papers/5')
+            .delete('/users/1')
             .expect(204)
             .end(done)
     })
