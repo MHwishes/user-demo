@@ -1,14 +1,45 @@
 version: '2'
 services:
-  jenkins:
-    image: jenkins:2.60.1
-    build: ./jenkins-docker
-    container_name: ci_jenkins
+  mysql:
+    image: mysql:5.7
     ports:
-      - 8080:8080
+      - 3306:3306
+
+    environment:
+      - LANG=C.UTF-8
+      - TERM=dumb
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=mahong
+      - MYSQL_PASSWORD=mahong
+      - MYSQL_USER=mahong
     networks:
       main:
         aliases:
-          - jenkins
+          - mysql
+
+
+  spring:
+     image: java:8-jdk-alpine
+     ports:
+       - 8888:8888
+     volumes:
+       - ./target/demo-0.0.1-SNAPSHOT.jar:/usr/src/myapp/spring-boot-demo-0.0.1.jar
+     command: java -jar /usr/src/myapp/spring-boot-demo-0.0.1.jar  --spring.profiles.active=pro
+     links:
+       - mysql:mysql
+     networks:
+       main:
+         aliases:
+           - spring
+
+  jenkins:
+     image: jenkins:2.60.1
+     ports:
+        - 8080:8080
+     networks:
+       main:
+         aliases:
+            - jenkins
+
 networks:
   main:
