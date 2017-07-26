@@ -22,8 +22,11 @@ services:
      image: java:8-jdk-alpine
      ports:
        - 8888:8888
+#     volumes:
+#       - ../spring-boot-user/demo/target/demo-0.0.1-SNAPSHOT.jar:/usr/src/myapp/spring-boot-demo-0.0.1.jar
+
      volumes:
-       - ./target/demo-0.0.1-SNAPSHOT.jar:/usr/src/myapp/spring-boot-demo-0.0.1.jar
+       - /Users/hma/Downloads/spring-boot-user-demo/target/demo-0.0.1-SNAPSHOT.jar:/usr/src/myapp/spring-boot-demo-0.0.1.jar
      command: java -jar /usr/src/myapp/spring-boot-demo-0.0.1.jar  --spring.profiles.active=pro
      links:
        - mysql:mysql
@@ -40,6 +43,18 @@ services:
        main:
          aliases:
             - jenkins
+
+  web-api:
+      image: node:8-alpine
+      ports:
+        - 3000:3000
+      volumes:
+        - ../web-api:/var/app
+      command: bash -c "cd /var/app && node app.js"
+      networks:
+        main:
+          aliases:
+            - web-api
 
 networks:
   main:
