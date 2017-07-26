@@ -1,12 +1,11 @@
-const constant = require('../config/constant');
+const constant = require('../constant');
 const request = require('superagent');
 const config = require('config');
 const apiService = config.get('back_endApiService');
-
 class ApiServiceController {
 
 
-    getAllUsers(req, res, next) {
+   getAllUsers(req, res, next) {
         request
             .get(apiService)
             .set('Accept', 'application/json')
@@ -36,8 +35,8 @@ class ApiServiceController {
 
     }
 
-    updateOneUser(req, res, next){ //TODO:put 接口有问题
-        const id=req.params.id;
+    updateOneUser(req, res, next) { //TODO:put 接口有问题
+        const id = req.params.id;
         request
             .put(apiService + `/${id}`)
             .send(req.body)
@@ -66,7 +65,8 @@ class ApiServiceController {
                 }
             })
     }
-    deleteUser(req, res, next){
+
+    deleteUser(req, res, next) {
         const id = req.params.id;
 
         request
@@ -80,7 +80,6 @@ class ApiServiceController {
                 }
             })
     }
-
 
 }
 
