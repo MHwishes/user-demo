@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import '../../style/index.less';
+import Index from './user/index';
 
-ReactDom.render(<h1>Hello,World!</h1>, document.getElementById('app'));
+ReactDom.render(<Index/>, document.getElementById('app'));

@@ -1,6 +1,6 @@
 {
   "webApiPrefix": "/api",
-  "pathPrefix": "",
+  "pathPrefix": ""
 //  "domain": "https://local.thoughtworks.school"
 }
 
