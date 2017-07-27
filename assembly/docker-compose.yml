@@ -56,5 +56,18 @@ services:
           aliases:
             - web-api
 
+  nginx:
+      image: nginx:1.13.3
+      ports:
+        - 9998:80
+#      command: /bin/bash -c "cd /etc/nginx && rm -rf conf.d.d"
+      volumes:
+        - ./nginx/conf.d/:/etc/nginx/conf.d
+        - ../web/public/assets:/var/twars/web
+      networks:
+        main:
+          aliases:
+            - nginx
+
 networks:
   main:

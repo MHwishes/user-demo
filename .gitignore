@@ -172,3 +172,5 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 
 ./web-api/node_modules
+./web/node_modules
+./web/public
