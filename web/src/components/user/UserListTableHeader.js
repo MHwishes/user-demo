@@ -2,9 +2,13 @@ import React, {Component} from 'react';
 import {render} from 'react-dom';
 
 export default class UserListTable extends Component{
+
     handleClick() {
-        // this.props.router.push(URI_PREFIX + '/web/new');
+       this.props.onAddUser();
+
     }
+
+
     render() {
         return (
             <div id='paperList-header'>

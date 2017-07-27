@@ -7,22 +7,13 @@ export default class UserListTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userList: [],
             isShowDeleteModal: false,
             deleteId: null,
         };
     }
 
     componentDidMount() {
-        superagent
-            .get(API_PREFIX + '/users')
-            .end((err, res) => {
-                if (err) {
-                    throw (err);
-                } else {
-                    this.setState({userList: res.body})
-                }
-            });
+        this.props.onUserList();
     }
 
     deleteUser(userId) {
@@ -41,16 +32,9 @@ export default class UserListTable extends Component {
                     throw (err);
                 } else {
                     if (res.status === 204) {
-                        superagent
-                            .get(API_PREFIX + '/users')
-                            .end((err, res) => {
-                                if (err) {
-                                    throw (err);
-                                } else {
-                                    this.setState({userList: res.body, isShowDeleteModal: false});
-                                }
-                            });
-
+                        this.setState({isShowDeleteModal: false}, () => {
+                            this.props.onUserList();
+                        })
                     }
                 }
             });
@@ -62,7 +46,7 @@ export default class UserListTable extends Component {
             {userInfo: '年龄'},
             {userInfo: '操作'}
         ];
-        const userList = this.state.userList || [];
+        const userList = this.props.userList || [];
         let userHTML = userList.map(({name, age, id}, index) => {
             return (
                 <tr key={index}>
