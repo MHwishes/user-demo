@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {render} from 'react-dom';
 
 export default class UserListTable extends Component {
 
@@ -9,11 +8,9 @@ export default class UserListTable extends Component {
 
     render() {
         return (
-            <div id='paperList-header'>
+            <div className='paperList-header'>
                 <div className='header'>
-                    <div className='table-header'>
-                        {this.props.userListTitle}
-                    </div>
+                    <div className='table-header'>用户列表</div>
                     <div className='row'>
                         <div className='paperList-title col-sm-offset-10 col-sm-2'>
 

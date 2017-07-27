@@ -71,7 +71,7 @@ export default class UserListTable extends Component {
             );
         });
         return (
-            <div id='paperList-form'>
+            <div className='user-form'>
                 <div className='table-form'>
                     <table className='table table-striped table-bordered table-hover'>
                         <thead>

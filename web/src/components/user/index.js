@@ -9,7 +9,6 @@ export default class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userListTitle: '用户列表',
             isShowSaveModal: false,
             userList: [],
             editorUserId: null
@@ -29,7 +28,7 @@ export default class Main extends Component {
     }
 
     saveUser(userId) {
-        this.setState({isShowSaveModal: true});
+        this.setState({isShowSaveModal: true,editorUserId:null});
         if (userId) {
             this.setState({editorUserId: userId})
         }
@@ -41,9 +40,9 @@ export default class Main extends Component {
 
     render() {
         return (
-            <div id='paper-list' className="col-sm-offset-2 col-sm-8">
+            <div id='user-list' className="col-sm-offset-2 col-sm-8">
                 <div>
-                    <TableHeader userListTitle={this.state.userListTitle} onAddUser={this.saveUser.bind(this)}/>
+                    <TableHeader onAddUser={this.saveUser.bind(this)}/>
 
                     <TableBody onAddUser={this.saveUser.bind(this)} onUserList={this.getUserList.bind(this)}
                                userList={this.state.userList}/>

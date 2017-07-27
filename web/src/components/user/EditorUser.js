@@ -9,7 +9,6 @@ export default class EditorUser extends Component {
         this.state = {
             name: '',
             age: '',
-            tableTitle: '新建用户',
             editorUserId: null
         };
     }
@@ -23,9 +22,10 @@ export default class EditorUser extends Component {
     componentWillReceiveProps(nextProps) {
 
         const id = nextProps.editorUserId;
+        this.cleanValue();
         if (id) {
             this.setState({
-                tableTitle: "编辑用户", editorUserId: id
+                editorUserId: id
             });
             superagent
                 .get(API_PREFIX + `/users/${id}`)
@@ -88,15 +88,15 @@ export default class EditorUser extends Component {
 
     render() {
         return (
-            <div id='edit-user paper-info'>
+            <div className='edit-user paper-info'>
                 <div className='static-modal'>
 
                     <Modal.Dialog>
                         <Modal.Header>
-                            <Modal.Title>{this.state.tableTitle}</Modal.Title>
+                            <Modal.Title>{this.state.editorUserId?'编辑用户':'新增用户'}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <div className='row'>
+                            <div className='row input-position'>
                                 <label className='col-sm-2 label-control'> 姓名</label>
                                 <div className='col-sm-6'>
                                     <input type='text' className='form-control' placeholder='请输入姓名'
