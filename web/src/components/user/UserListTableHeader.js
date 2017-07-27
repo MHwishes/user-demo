@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 
-export default class UserListTable extends Component{
+export default class UserListTable extends Component {
 
     handleClick() {
-       this.props.onAddUser();
-
+        this.props.onAddUser();
     }
-
 
     render() {
         return (

@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {render} from 'react-dom';
 import {Modal, Button} from 'react-bootstrap';
 import superagent from 'superagent';
 
@@ -9,27 +8,74 @@ export default class EditorUser extends Component {
         super(props);
         this.state = {
             name: '',
-            age: ''
+            age: '',
+            tableTitle: '新建用户',
+            editorUserId: null
         };
     }
 
     cancelButton() {
         this.props.onCancelModal();
+        this.name.value = '';
+        this.age.value = '';
+    }
+
+    componentWillReceiveProps(nextProps) {
+
+        const id = nextProps.editorUserId;
+        if (id) {
+            this.setState({
+                tableTitle: "编辑用户", editorUserId: id
+            });
+            superagent
+                .get(API_PREFIX + `/users/${id}`)
+                .end((err, res) => {
+                    if (err) {
+                        throw (err)
+                    } else {
+                        this.name.value = res.body.name;
+                        this.age.value = res.body.age;
+                    }
+                })
+        }
+    }
+
+    cleanValue() {
+        this.name.value = '';
+        this.age.value = '';
     }
 
     confirmButton() {
-        superagent
-            .post(API_PREFIX + '/users')
-            .set('Content-Type', 'application/json')
-            .send({name: this.state.name, age: this.state.age})
-            .end((err, res) => {
-                if (res.statusCode === 201) {
-                    this.props.onUserList();
-                    this.props.onCancelModal()
-                } else {
-                    throw err;
-                }
-            });
+        if (this.state.editorUserId) {
+            superagent
+                .put(API_PREFIX + `/users/${this.state.editorUserId}`)
+                .set('Content-Type', 'application/json')
+                .send({name: this.name.value, age: this.age.value})
+                .end((err, res) => {
+                    if (res.statusCode === 204) {
+                        this.props.onUserList();
+                        this.props.onCancelModal();
+                        this.cleanValue();
+                    } else {
+                        throw err;
+                    }
+                });
+
+        } else {
+            superagent
+                .post(API_PREFIX + '/users')
+                .set('Content-Type', 'application/json')
+                .send({name: this.state.name, age: this.state.age})
+                .end((err, res) => {
+                    if (res.statusCode === 201) {
+                        this.props.onUserList();
+                        this.props.onCancelModal();
+                        this.cleanValue();
+                    } else {
+                        throw err;
+                    }
+                });
+        }
     }
 
     editUserName() {
@@ -47,7 +93,7 @@ export default class EditorUser extends Component {
 
                     <Modal.Dialog>
                         <Modal.Header>
-                            <Modal.Title>添加用户</Modal.Title>
+                            <Modal.Title>{this.state.tableTitle}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                             <div className='row'>

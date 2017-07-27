@@ -12,6 +12,7 @@ export default class Main extends Component {
             userListTitle: '用户列表',
             isShowSaveModal: false,
             userList: [],
+            editorUserId: null
         };
     }
 
@@ -27,11 +28,14 @@ export default class Main extends Component {
             });
     }
 
-    saveUser() {
-        this.setState({isShowSaveModal: true})
+    saveUser(userId) {
+        this.setState({isShowSaveModal: true});
+        if (userId) {
+            this.setState({editorUserId: userId})
+        }
     }
 
-    cancelModal(){
+    cancelModal() {
         this.setState({isShowSaveModal: false})
     }
 
@@ -41,12 +45,14 @@ export default class Main extends Component {
                 <div>
                     <TableHeader userListTitle={this.state.userListTitle} onAddUser={this.saveUser.bind(this)}/>
 
-                    <TableBody  onUserList={this.getUserList.bind(this)} userList={this.state.userList}/>
+                    <TableBody onAddUser={this.saveUser.bind(this)} onUserList={this.getUserList.bind(this)}
+                               userList={this.state.userList}/>
 
                 </div>
                 <div className={this.state.isShowSaveModal ? '' : 'hidden'}>
 
-                    <EditorUser onCancelModal={this.cancelModal.bind(this)} onUserList={this.getUserList.bind(this)}/>
+                    <EditorUser editorUserId={this.state.editorUserId} onCancelModal={this.cancelModal.bind(this)}
+                                onUserList={this.getUserList.bind(this)}/>
 
                 </div>
             </div>

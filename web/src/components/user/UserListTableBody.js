@@ -8,7 +8,7 @@ export default class UserListTable extends Component {
         super(props);
         this.state = {
             isShowDeleteModal: false,
-            deleteId: null,
+            userId: null,
         };
     }
 
@@ -17,16 +17,20 @@ export default class UserListTable extends Component {
     }
 
     deleteUser(userId) {
-        this.setState({isShowDeleteModal: true, deleteId: userId})
+        this.setState({isShowDeleteModal: true, userId: userId})
     }
 
     cancelButton() {
-        this.setState({isShowDeleteModal: false, deleteId: null})
+        this.setState({isShowDeleteModal: false, userId: null})
+    }
+
+    editUser(userId){
+        this.props.onAddUser(userId);
     }
 
     confirmButton() {
         superagent
-            .delete(API_PREFIX + `/users/${this.state.deleteId}`)
+            .delete(API_PREFIX + `/users/${this.state.userId}`)
             .end((err, res) => {
                 if (err) {
                     throw (err);
@@ -56,7 +60,7 @@ export default class UserListTable extends Component {
                     <td>
                         <div className='action-buttons'>
                             <a className='green'>
-                                <i className={'fa fa-pencil bigger'}> </i>
+                                <i className={'fa fa-pencil bigger'} onClick={this.editUser.bind(this,id)}> </i>
                             </a>
                             <a className='red'>
                                 <i className='fa fa-trash-o bigger' onClick={this.deleteUser.bind(this, id)}> </i>
